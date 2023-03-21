@@ -4,14 +4,15 @@ library("formattable")
 library("openxlsx")
 
 #####Lendo tabela
-df <- read_xlsx("/home/uff/Downloads/DADOS - ESTAÇÃO CAMPOS DOS GOYTACAZES.xlsx")
+nome_arquivo <- "/home/uff/Downloads/DADOS - ESTAÇÃO CAMPOS DOS GOYTACAZES.xlsx"
+df <- read_xlsx(nome_arquivo)
 
 #####Pegando limiares da sheet de Média e transformando em um vetor
-limiares_df <- read_xlsx("/home/uff/Downloads/DADOS - ESTAÇÃO CAMPOS DOS GOYTACAZES.xlsx", sheet="MÉDIA")
+limiares_df <- read_xlsx(nome_arquivo, sheet="MÉDIA")
 v <- as.vector(limiares_df[,16])[[1]][2:13]
 
 #####Pegando os nomes das sheets
-sheets <- excel_sheets("/home/uff/Downloads/DADOS - ESTAÇÃO CAMPOS DOS GOYTACAZES.xlsx")
+sheets <- excel_sheets(nome_arquivo)
 year_sheets <- numeric()
 
 for (i in 1:length(sheets)) {
@@ -34,7 +35,7 @@ colunas <- seq(2, 35, by=3)
 wb <- createWorkbook()
 
 for (i in 1:length(year_sheets)) {
-  df <- read_xlsx("/home/uff/Downloads/DADOS - ESTAÇÃO CAMPOS DOS GOYTACAZES.xlsx", sheet=as.character(year_sheets[i]))
+  df <- read_xlsx(nome_arquivo, sheet=as.character(year_sheets[i]))
  
   df_no_header <- df[8:nrow(df), ]
   head(df_no_header)
